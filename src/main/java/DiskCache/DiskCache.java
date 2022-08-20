@@ -78,6 +78,17 @@ public class DiskCache<K, V extends Serializable> extends LinkedHashMap<K, Strin
             {
                 if (super.containsKey(key)) {
 
+                    String pathToObject = super.get(key);
+                    try (FileInputStream fileStream = new FileInputStream(pathToObject);
+                         ObjectInputStream objectStream = new ObjectInputStream(fileStream)) {
+                        V deserializeObject = (V) objectStream.readObject();
+
+                        super.get(key);
+
+                        return Optional.of(deserializeObject);
+                    } catch (IOException | ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
                 }
                 return Optional.empty();
             }
@@ -111,6 +122,9 @@ public class DiskCache<K, V extends Serializable> extends LinkedHashMap<K, Strin
                 diskCache.putKeyAndValue(1, 5);
                 System.out.println(diskCache);
                 diskCache.putKeyAndValue(5, 12);
+                System.out.println(diskCache);
+                System.out.println(diskCache.getValueByKey(3));
+                diskCache.putKeyAndValue(12, 36);
                 System.out.println(diskCache);
             }
     }
