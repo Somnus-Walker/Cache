@@ -110,21 +110,4 @@ public class DiskCache<K, V extends Serializable> extends LinkedHashMap<K, Strin
                         "objectMap=" + super.keySet() +
                         '}';
             }
-
-        public static void main(String[] args) throws NullElementException, IOException
-            {
-                Cache<Integer, Integer> diskCache = new DiskCache<Integer, Integer>(3);
-
-                diskCache.putKeyAndValue(1, 1);
-                diskCache.putKeyAndValue(2, 2);
-                diskCache.putKeyAndValue(3, 3);
-                System.out.println(diskCache);
-                diskCache.putKeyAndValue(1, 5);
-                System.out.println(diskCache);
-                diskCache.putKeyAndValue(5, 12);
-                System.out.println(diskCache);
-                System.out.println(diskCache.getValueByKey(3));
-                diskCache.putKeyAndValue(12, 36);
-                System.out.println(diskCache);
-            }
     }
