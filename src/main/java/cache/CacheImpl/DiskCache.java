@@ -1,4 +1,4 @@
-package disk.cache;
+package cache.CacheImpl;
 
 import cache.Cache;
 
@@ -23,7 +23,7 @@ public final class DiskCache<K, V extends Serializable> extends LinkedHashMap<K,
 
 
     @Override
-    public void putKeyAndValue(final K key, final V value)  {
+    public void putKeyAndValue(final K key, final V value) {
         if (super.containsValue(super.get(key))) {
             updateValue(key, value);
         } else {
@@ -33,14 +33,12 @@ public final class DiskCache<K, V extends Serializable> extends LinkedHashMap<K,
                 evictEldestEntry();
             }
         }
-
     }
 
 
     private void updateValue(final K key, final V value) {
         String pathToObject = super.get(key);
-        try (FileOutputStream fileStream = new FileOutputStream(pathToObject);
-             ObjectOutputStream objectStream = new ObjectOutputStream(fileStream)) {
+        try (FileOutputStream fileStream = new FileOutputStream(pathToObject); ObjectOutputStream objectStream = new ObjectOutputStream(fileStream)) {
             objectStream.writeObject(value);
         } catch (IOException e) {
             e.printStackTrace();
@@ -50,8 +48,7 @@ public final class DiskCache<K, V extends Serializable> extends LinkedHashMap<K,
     private void putObject(final K key, final V value) {
         String pathToObject = "temp\\" + UUID.randomUUID().toString() + ".temp";
 
-        try (FileOutputStream fileStream = new FileOutputStream(pathToObject);
-             ObjectOutputStream objectStream = new ObjectOutputStream(fileStream)) {
+        try (FileOutputStream fileStream = new FileOutputStream(pathToObject); ObjectOutputStream objectStream = new ObjectOutputStream(fileStream)) {
             super.put(key, pathToObject);
 
 
@@ -74,27 +71,36 @@ public final class DiskCache<K, V extends Serializable> extends LinkedHashMap<K,
     @Override
     public Optional<V> getValueByKey(final K key) {
         if (super.containsKey(key)) {
-            String pathToObject = super.get(key);
-            try (FileInputStream fileStream = new FileInputStream(pathToObject); ObjectInputStream objectStream = new ObjectInputStream(fileStream)) {
-                V deserializeObject = (V) objectStream.readObject();
-
-                super.get(key);
-
-                return Optional.of(deserializeObject);
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
-            }
+            return Optional.ofNullable(getValue(key));
         }
         return Optional.empty();
     }
 
+    private V getValue(K key) {
+        String pathToObject = super.get(key);
+        try (FileInputStream fileStream = new FileInputStream(pathToObject); ObjectInputStream objectStream = new ObjectInputStream(fileStream)) {
+            V deserializeObject = (V) objectStream.readObject();
+
+            super.get(key);
+
+            return deserializeObject;
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     @Override
     public void clearCache() {
+       fileDeleter();
+
+       super.clear();
+    }
+    private void fileDeleter(){
         for (Map.Entry<K, String> entry : super.entrySet()) {
             File deletingFile = new File(entry.getValue());
             deletingFile.delete();
         }
-        super.clear();
     }
 
     @Override
