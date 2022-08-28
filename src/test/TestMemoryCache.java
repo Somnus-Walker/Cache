@@ -1,6 +1,6 @@
 import cache.Cache;
 import exceptions.NullElementException;
-import memory.cache.MemoryCache;
+import cache.CacheImpl.MemoryCache;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

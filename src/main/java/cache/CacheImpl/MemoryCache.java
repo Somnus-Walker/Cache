@@ -1,4 +1,4 @@
-package memory.cache;
+package cache.CacheImpl;
 
 import cache.Cache;
 import exceptions.NullElementException;

@@ -1,5 +1,5 @@
 import cache.Cache;
-import disk.cache.DiskCache;
+import cache.CacheImpl.DiskCache;
 import exceptions.NullElementException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,12 +40,18 @@ public class TestDiskCache {
         assertEquals(Optional.of(12), diskCache.getValueByKey(1));
         assertEquals(Optional.of(31), diskCache.getValueByKey(30));
     }
-@Test
+
+    @Test
     void clearCacheTest() {
         diskCache.clearCache();
 
         assertEquals(Optional.empty(), diskCache.getValueByKey(1));
         assertEquals(Optional.empty(), diskCache.getValueByKey(2));
         assertEquals(Optional.empty(), diskCache.getValueByKey(3));
+    }
+
+    public static void main(String[] args) {
+        Cache<Integer, Integer> cache = new DiskCache<>(3);
+        cache.clearCache();
     }
 }
