@@ -1,6 +1,6 @@
 import cache.Cache;
 import cache.CacheImpl.DiskCache;
-import exceptions.NullElementException;
+import cache.exceptions.NullElementException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

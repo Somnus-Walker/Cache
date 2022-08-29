@@ -1,9 +1,8 @@
 package cache;
 
 
-import exceptions.NullElementException;
+import cache.exceptions.NullElementException;
 
-import java.io.IOException;
 import java.util.Optional;
 
 
