@@ -1,6 +1,6 @@
 package cache.CacheImpl;
 
-import cache.Cache;
+import cache.CacheBuilder.CacheBuilder;
 
 import java.io.*;
 import java.util.LinkedHashMap;
@@ -8,10 +8,11 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
-public final class DiskCache<K, V extends Serializable> extends LinkedHashMap<K, String> implements Cache<K, V> {
+public final class DiskCacheBuilder<K, V extends Serializable> extends LinkedHashMap<K, String>
+        implements CacheBuilder<K, V> {
     private final int cacheSize;
 
-    public DiskCache(final int cacheSize) {
+    public DiskCacheBuilder(final int cacheSize) {
         super(cacheSize, 0.75F, true);
         this.cacheSize = cacheSize;
 
@@ -23,7 +24,7 @@ public final class DiskCache<K, V extends Serializable> extends LinkedHashMap<K,
 
 
     @Override
-    public void putKeyAndValue(final K key, final V value) {
+    public CacheBuilder<K, V> putKeyAndValue(final K key, final V value) {
         if (super.containsValue(super.get(key))) {
             updateValue(key, value);
         } else {
@@ -33,6 +34,7 @@ public final class DiskCache<K, V extends Serializable> extends LinkedHashMap<K,
                 evictEldestEntry();
             }
         }
+        return this;
     }
 
 
@@ -69,11 +71,11 @@ public final class DiskCache<K, V extends Serializable> extends LinkedHashMap<K,
     }
 
     @Override
-    public Optional<V> getValueByKey(final K key) {
+    public CacheBuilder<K, V> getValueByKey(final K key) {
         if (super.containsKey(key)) {
-            return Optional.ofNullable(getValue(key));
+            getValue(key);
         }
-        return Optional.empty();
+        return this;
     }
 
     private V getValue(K key) {
@@ -91,12 +93,15 @@ public final class DiskCache<K, V extends Serializable> extends LinkedHashMap<K,
     }
 
     @Override
-    public void clearCache() {
-       fileDeleter();
+    public CacheBuilder<K, V> clearCache() {
+        fileDeleter();
 
-       super.clear();
+        super.clear();
+
+        return this;
     }
-    private void fileDeleter(){
+
+    private void fileDeleter() {
         for (Map.Entry<K, String> entry : super.entrySet()) {
             File deletingFile = new File(entry.getValue());
             deletingFile.delete();
