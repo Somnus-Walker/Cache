@@ -1,4 +1,8 @@
 import cache.Cache;
+import cache.CacheBuilder.CBImpl.DiskCacheBuilder;
+import cache.CacheBuilder.CBImpl.MemoryCacheBuilder;
+import cache.CacheBuilder.CacheBuilder;
+import cache.CacheBuilder.CacheEngineer.CacheEngineer;
 import cache.exceptions.NullElementException;
 import cache.CacheImpl.MemoryCache;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,10 +17,9 @@ public class TestMemoryCache {
 
     @BeforeEach
     void setup() throws NullElementException {
-        cache = new MemoryCache<Integer, Integer>(3);
-        cache.putKeyAndValue(1, 1);
-        cache.putKeyAndValue(2, 2);
-        cache.putKeyAndValue(3, 3);
+        CacheBuilder<Integer, Integer> cacheBuilder = new MemoryCacheBuilder<>();
+        CacheEngineer<Integer, Integer> cacheEngineer = new CacheEngineer<>(cacheBuilder);
+        cache = cacheEngineer.manufactureCache();
     }
 
     @Test

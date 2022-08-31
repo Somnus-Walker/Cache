@@ -7,7 +7,7 @@ import cache.CacheImpl.DiskCache;
 import java.io.Serializable;
 
 public class DiskCacheBuilder<K, V extends Serializable> implements CacheBuilder<K, V> {
-    int cacheSize;
+   private int cacheSize;
 
 
     @Override

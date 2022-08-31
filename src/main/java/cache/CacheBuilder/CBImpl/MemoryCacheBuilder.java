@@ -6,7 +6,7 @@ import cache.CacheImpl.DiskCache;
 import cache.CacheImpl.MemoryCache;
 
 public class MemoryCacheBuilder<K, V> implements CacheBuilder<K, V> {
-    int cacheSize;
+    private int cacheSize;
 
     @Override
     public MemoryCacheBuilder<K, V> cacheSize(int cacheSize) {
