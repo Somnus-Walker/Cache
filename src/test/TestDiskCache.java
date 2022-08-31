@@ -1,4 +1,7 @@
 import cache.Cache;
+import cache.CacheBuilder.CBImpl.DiskCacheBuilder;
+import cache.CacheBuilder.CacheBuilder;
+import cache.CacheBuilder.CacheEngineer.CacheEngineer;
 import cache.CacheImpl.DiskCache;
 import exceptions.NullElementException;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,10 +16,9 @@ public class TestDiskCache {
 
     @BeforeEach
     void setup() throws NullElementException {
-        diskCache = new DiskCache<>(3);
-        diskCache.putKeyAndValue(1, 1);
-        diskCache.putKeyAndValue(2, 2);
-        diskCache.putKeyAndValue(3, 3);
+        CacheBuilder<Integer, Integer> cacheBuilder = new DiskCacheBuilder<>();
+        CacheEngineer<Integer, Integer> cacheEngineer = new CacheEngineer<>(cacheBuilder);
+        diskCache = cacheEngineer.manufactureCache();
     }
 
     @Test
