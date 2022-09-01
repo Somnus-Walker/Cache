@@ -1,8 +1,7 @@
-package cache.CacheBuilder.builders;
+package cache.builders;
 
 import cache.Cache;
-import cache.CacheBuilder.CacheBuilder;
-import cache.CacheImpl.MemoryCache;
+import cache.caches.MemoryCache;
 
 public class MemoryCacheBuilder<K, V> implements CacheBuilder<K, V> {
     private int cacheSize;

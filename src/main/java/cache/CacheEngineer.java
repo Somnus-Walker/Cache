@@ -1,7 +1,6 @@
-package cache.CacheBuilder.CacheEngineer;
+package cache;
 
-import cache.Cache;
-import cache.CacheBuilder.CacheBuilder;
+import cache.builders.CacheBuilder;
 
 public class CacheEngineer<K, V> {
     private final CacheBuilder<K, V> builder;

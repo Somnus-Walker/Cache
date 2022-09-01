@@ -1,9 +1,8 @@
 package cache;
 
-import cache.CacheBuilder.CacheBuilder;
-import cache.CacheBuilder.CacheEngineer.CacheEngineer;
-import cache.CacheBuilder.builders.DiskCacheBuilder;
-import exceptions.NullElementException;
+import cache.builders.CacheBuilder;
+import cache.builders.DiskCacheBuilder;
+import cache.exceptions.NullElementException;
 
 public class Test {
 

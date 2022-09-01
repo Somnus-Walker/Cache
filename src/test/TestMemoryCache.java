@@ -1,5 +1,5 @@
 import cache.Cache;
-import cache.CacheBuilder.builders.MemoryCacheBuilder;
+import cache.builders.MemoryCacheBuilder;
 import cache.CacheBuilder.CacheBuilder;
 import cache.CacheBuilder.CacheEngineer.CacheEngineer;
 import cache.exceptions.NullElementException;

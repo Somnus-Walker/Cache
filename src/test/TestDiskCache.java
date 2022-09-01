@@ -1,9 +1,9 @@
 import cache.Cache;
-import cache.CacheBuilder.builders.DiskCacheBuilder;
+import cache.builders.DiskCacheBuilder;
 import cache.CacheBuilder.CacheBuilder;
 import cache.CacheBuilder.CacheEngineer.CacheEngineer;
-import cache.CacheImpl.DiskCache;
-import exceptions.NullElementException;
+import cache.caches.DiskCache;
+import cache.exceptions.NullElementException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

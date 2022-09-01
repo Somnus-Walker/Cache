@@ -1,8 +1,7 @@
-package cache.CacheBuilder.builders;
+package cache.builders;
 
 import cache.Cache;
-import cache.CacheBuilder.CacheBuilder;
-import cache.CacheImpl.DiskCache;
+import cache.caches.DiskCache;
 
 import java.io.Serializable;
 

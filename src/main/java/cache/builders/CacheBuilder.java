@@ -1,4 +1,4 @@
-package cache.CacheBuilder;
+package cache.builders;
 
 import cache.Cache;
 

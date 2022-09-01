@@ -1,7 +1,7 @@
-package cache.CacheImpl;
+package cache.caches;
 
 import cache.Cache;
-import exceptions.NullElementException;
+import cache.exceptions.NullElementException;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
