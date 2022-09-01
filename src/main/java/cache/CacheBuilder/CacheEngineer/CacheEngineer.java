@@ -8,7 +8,7 @@ public class CacheEngineer<K, V> {
 
     public CacheEngineer(CacheBuilder<K, V> builder) {
         this.builder = builder;
-        if (this.builder == null) throw new IllegalArgumentException("Cant build without builder");
+        if (this.builder == null) {throw new IllegalArgumentException("Cant build without builder");}
     }
 
     public Cache<K, V> manufactureCache() {
