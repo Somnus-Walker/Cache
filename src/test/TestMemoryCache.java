@@ -1,10 +1,8 @@
 import cache.Cache;
-import cache.CacheBuilder.CBImpl.DiskCacheBuilder;
-import cache.CacheBuilder.CBImpl.MemoryCacheBuilder;
+import cache.CacheBuilder.builders.MemoryCacheBuilder;
 import cache.CacheBuilder.CacheBuilder;
 import cache.CacheBuilder.CacheEngineer.CacheEngineer;
 import cache.exceptions.NullElementException;
-import cache.CacheImpl.MemoryCache;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,18 +10,21 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TestMemoryCache {
+public class TestMemoryCache
+{
     Cache<Integer, Integer> cache;
 
     @BeforeEach
-    void setup() throws NullElementException {
+    void setup() throws NullElementException
+    {
         CacheBuilder<Integer, Integer> cacheBuilder = new MemoryCacheBuilder<>();
         CacheEngineer<Integer, Integer> cacheEngineer = new CacheEngineer<>(cacheBuilder);
         cache = cacheEngineer.manufactureCache();
     }
 
     @Test
-    void LRUCacheTest() throws NullElementException {
+    void LRUCacheTest() throws NullElementException
+    {
         assertAll("put all values", () -> assertEquals(Optional.of(1), cache.getValueByKey(1)), () -> assertEquals(Optional.of(2), cache.getValueByKey(2)), () -> assertEquals(Optional.of(3), cache.getValueByKey(3)));
 
         cache.putKeyAndValue(4, 4);
@@ -35,7 +36,8 @@ public class TestMemoryCache {
     }
 
     @Test
-    void LRUUpdateValueTest() throws NullElementException {
+    void LRUUpdateValueTest() throws NullElementException
+    {
         cache.putKeyAndValue(1, 5);
         cache.putKeyAndValue(4, 4);
 
@@ -44,7 +46,8 @@ public class TestMemoryCache {
     }
 
     @Test
-    void clearCacheTest() {
+    void clearCacheTest()
+    {
         cache.clearCache();
 
         assertEquals(Optional.empty(), cache.getValueByKey(1));

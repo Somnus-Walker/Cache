@@ -12,13 +12,11 @@ public final class MemoryCache<K, V> extends LinkedHashMap<K, V> implements Cach
     private static final float LOAD_FACTOR = 0.75F;
     private final int cacheSize;
 
-    // CHECKSTYLE:OFF: MagicNumber
     public MemoryCache(final int cacheSize) {
         super(cacheSize, LOAD_FACTOR, true);
 
         this.cacheSize = cacheSize;
     }
-    // CHECKSTYLE:ON: MagicNumber
 
     @Override
     public void putKeyAndValue(final K key, final V value) throws NullElementException {
