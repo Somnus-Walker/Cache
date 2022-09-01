@@ -107,18 +107,9 @@ public final class DiskCache<K, V extends Serializable> extends LinkedHashMap<K,
         super.clear();
     }
 
+
     private void deleteFiles()
     {
-
-    public void clearCache() {
-       deleteFiles();
-
-        super.clear();
-    }
-
-    private void deleteFiles() {
-
-    }
         for (Map.Entry<K, String> entry : super.entrySet()) {
             File deletingFile = new File(entry.getValue());
             deletingFile.delete();
