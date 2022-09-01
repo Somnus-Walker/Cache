@@ -9,13 +9,16 @@ import java.util.Optional;
 
 
 public final class MemoryCache<K, V> extends LinkedHashMap<K, V> implements Cache<K, V> {
+    private static final float LOAD_FACTOR = 0.75F;
     private final int cacheSize;
 
+    // CHECKSTYLE:OFF: MagicNumber
     public MemoryCache(final int cacheSize) {
-        super(cacheSize, 0.75F, true);
+        super(cacheSize, LOAD_FACTOR, true);
 
         this.cacheSize = cacheSize;
     }
+    // CHECKSTYLE:ON: MagicNumber
 
     @Override
     public void putKeyAndValue(final K key, final V value) throws NullElementException {

@@ -2,17 +2,24 @@ package cache.CacheImpl;
 
 import cache.Cache;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
 public final class DiskCache<K, V extends Serializable> extends LinkedHashMap<K, String> implements Cache<K, V> {
+    private static final float LOAD_FACTOR = 0.75F;
     private final int cacheSize;
 
     public DiskCache(final int cacheSize) {
-        super(cacheSize, 0.75F, true);
+        super(cacheSize, LOAD_FACTOR, true);
         this.cacheSize = cacheSize;
 
         File tempFolder = new File("temp");
@@ -20,7 +27,6 @@ public final class DiskCache<K, V extends Serializable> extends LinkedHashMap<K,
             tempFolder.mkdir();
         }
     }
-
 
     @Override
     public void putKeyAndValue(final K key, final V value) {
@@ -38,7 +44,8 @@ public final class DiskCache<K, V extends Serializable> extends LinkedHashMap<K,
 
     private void updateValue(final K key, final V value) {
         String pathToObject = super.get(key);
-        try (FileOutputStream fileStream = new FileOutputStream(pathToObject); ObjectOutputStream objectStream = new ObjectOutputStream(fileStream)) {
+        try (FileOutputStream fileStream = new FileOutputStream(pathToObject);
+             ObjectOutputStream objectStream = new ObjectOutputStream(fileStream)) {
             objectStream.writeObject(value);
         } catch (IOException e) {
             e.printStackTrace();
@@ -46,9 +53,10 @@ public final class DiskCache<K, V extends Serializable> extends LinkedHashMap<K,
     }
 
     private void putObject(final K key, final V value) {
-        String pathToObject = "temp\\" + UUID.randomUUID().toString() + ".temp";
+        String pathToObject = "temp\\" + UUID.randomUUID() + ".temp";
 
-        try (FileOutputStream fileStream = new FileOutputStream(pathToObject); ObjectOutputStream objectStream = new ObjectOutputStream(fileStream)) {
+        try (FileOutputStream fileStream = new FileOutputStream(pathToObject);
+             ObjectOutputStream objectStream = new ObjectOutputStream(fileStream)) {
             super.put(key, pathToObject);
 
 
@@ -78,7 +86,8 @@ public final class DiskCache<K, V extends Serializable> extends LinkedHashMap<K,
 
     private V getValue(K key) {
         String pathToObject = super.get(key);
-        try (FileInputStream fileStream = new FileInputStream(pathToObject); ObjectInputStream objectStream = new ObjectInputStream(fileStream)) {
+        try (FileInputStream fileStream = new FileInputStream(pathToObject);
+             ObjectInputStream objectStream = new ObjectInputStream(fileStream)) {
             V deserializeObject = (V) objectStream.readObject();
 
             super.get(key);
@@ -92,11 +101,12 @@ public final class DiskCache<K, V extends Serializable> extends LinkedHashMap<K,
 
     @Override
     public void clearCache() {
-       deleteFiles();
+        deleteFiles();
 
-       super.clear();
+        super.clear();
     }
-    private void deleteFiles(){
+
+    private void deleteFiles() {
         for (Map.Entry<K, String> entry : super.entrySet()) {
             File deletingFile = new File(entry.getValue());
             deletingFile.delete();

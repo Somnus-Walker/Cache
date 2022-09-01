@@ -94,7 +94,6 @@
             </plugin>
 
 
-
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
@@ -130,10 +129,14 @@
                         <id>checkstyle</id>
                         <phase>compile</phase>
                         <goals>
-                            <goal>checkstyle</goal>
+                            <goal>check</goal>
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                    <configLocation>src/main/resources/checkstyle.xml</configLocation>
+                </configuration>
             </plugin>
 
         </plugins>
