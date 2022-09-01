@@ -1,4 +1,4 @@
-package cache.CacheImpl;
+package cache.caches;
 
 import cache.Cache;
 
