@@ -1,8 +1,5 @@
-<<<<<<< HEAD:src/main/java/cache/CacheBuilder/builders/DiskCacheBuilder.java
+
 package cache.CacheBuilder.builders;
-=======
-package cache.CacheBuilder.builders
->>>>>>> 26e03d8f357ca5f957dcffb83c9f28b5eb4ad1de:src/main/java/cache/CacheBuilder/CBImpl/DiskCacheBuilder.java
 
 import cache.Cache;
 import cache.CacheBuilder.CacheBuilder;
