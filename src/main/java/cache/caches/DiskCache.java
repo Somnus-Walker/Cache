@@ -14,7 +14,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
-public final class DiskCache<K, V extends Serializable> extends LinkedHashMap<K, String> implements Cache<K, V> {
+public final class DiskCache<K, V extends Serializable>
+        extends LinkedHashMap<K, String> implements Cache<K, V> {
     private static final float LOAD_FACTOR = 0.75F;
     private final int cacheSize;
 
