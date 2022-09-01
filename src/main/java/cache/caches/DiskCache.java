@@ -14,8 +14,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
-public final class DiskCache<K, V extends Serializable>
-        extends LinkedHashMap<K, String> implements Cache<K, V> {
+public final class DiskCache<K, V extends Serializable> extends LinkedHashMap<K, String> implements Cache<K, V> {
     private static final float LOAD_FACTOR = 0.75F;
     private final int cacheSize;
 
@@ -23,14 +22,21 @@ public final class DiskCache<K, V extends Serializable>
         super(cacheSize, LOAD_FACTOR, true);
         this.cacheSize = cacheSize;
 
+        createStorage();
+    }
+
+    private void createStorage() {
         File tempFolder = new File("temp");
         if (!tempFolder.exists()) {
-            tempFolder.mkdir();
+            if (tempFolder.mkdir()) {
+                System.out.println("Creation complete");
+            }
         }
     }
 
     @Override
     public void putKeyAndValue(final K key, final V value) {
+
         if (super.containsValue(super.get(key))) {
             updateValue(key, value);
         } else {
@@ -70,7 +76,9 @@ public final class DiskCache<K, V extends Serializable>
     private void evictEldestEntry() {
         Map.Entry<K, String> entry = (Map.Entry<K, String>) super.entrySet().toArray()[0];
         File deletingFile = new File(super.remove(entry.getKey()));
-        deletingFile.delete();
+        if (deletingFile.delete()) {
+            System.out.println("Entry successfully " + "evict.");
+        }
     }
 
     private boolean isFull() {
@@ -110,7 +118,9 @@ public final class DiskCache<K, V extends Serializable>
     private void deleteFiles() {
         for (Map.Entry<K, String> entry : super.entrySet()) {
             File deletingFile = new File(entry.getValue());
-            deletingFile.delete();
+            if (deletingFile.delete()) {
+                System.out.println("File deleted successfully");
+            }
         }
     }
 
